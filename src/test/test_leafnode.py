@@ -15,7 +15,7 @@ class TestLeafNode(unittest.TestCase):
         self.assertEqual(node.to_html(), "<a href=\"https://www.google.com\">Click me!</a>")
     
     def test_empty_value(self):
-        node = LeafNode("span", "")
+        node = LeafNode("span", None)
         with self.assertRaises(ValueError):
             node.to_html()
 

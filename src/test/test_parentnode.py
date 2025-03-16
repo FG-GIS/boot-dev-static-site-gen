@@ -1,7 +1,7 @@
 import unittest
 
 from htmlnode import ParentNode,LeafNode
-import pretty_test
+import pretty_test 
 
 
 
@@ -10,7 +10,7 @@ class TestParentNode(unittest.TestCase):
         child_node = LeafNode("span", "child")
         parent_node = ParentNode("div", [child_node])
         expected = "<div><span>child</span></div>"
-        pretty_test.print_test(self.test_to_html_with_children,expected,parent_node.to_html())
+        pretty_test.print_test("parent test 1",expected,parent_node.to_html())
         self.assertEqual(parent_node.to_html(), expected)
 
     def test_to_html_with_grandchildren(self):
@@ -18,7 +18,7 @@ class TestParentNode(unittest.TestCase):
         child_node = ParentNode("span", [grandchild_node])
         parent_node = ParentNode("div", [child_node])
         expected = "<div><span><b>grandchild</b></span></div>"
-        pretty_test.print_test(self.test_to_html_with_grandchildren,expected,parent_node.to_html())
+        pretty_test.print_test("parent test 2",expected,parent_node.to_html())
         self.assertEqual(
             parent_node.to_html(),
             expected,
@@ -48,7 +48,7 @@ class TestParentNode(unittest.TestCase):
         parent_node = ParentNode("div", [child_node], props={"class": "container", "id": "main"})
         expected_props = ' class="container" id="main"'
         expected_html = f"<div{expected_props}><span>child</span></div>"
-        pretty_test.print_test(self.test_props_handling,expected_html,parent_node.to_html())
+        pretty_test.print_test("parent test 3",expected_html,parent_node.to_html())
         self.assertEqual(parent_node.to_html(), expected_html)
 
 if __name__ == "__main__":

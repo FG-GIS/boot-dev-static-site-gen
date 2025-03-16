@@ -1,1 +1,2 @@
-python3 -m unittest discover -s src
+export PYTHONPATH=./src
+python3 -m unittest discover -s src/test
