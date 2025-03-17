@@ -1,7 +1,7 @@
 import unittest
 
 from textnode import TextNode,TextType
-from converter import text_node_to_html_node
+from converter import text_node_to_html_node,markdown_to_blocks
 import pretty_test
 from textnode import TextNode, TextType
 from htmlnode import ParentNode, LeafNode
@@ -95,6 +95,52 @@ class TestConversionHierarchy(unittest.TestCase):
         expected = f"<div{expected_props}><article><p>First paragraph.</p></article></div>"
         pretty_test.print_test("hierarchy test 3", expected, div.to_html())
         self.assertEqual(div.to_html(), expected)
+
+class TestMarkdownBlocks(unittest.TestCase):
+    def test_markdown_to_blocks(self):
+        md = """
+This is **bolded** paragraph
+
+This is another paragraph with _italic_ text and `code` here
+This is the same paragraph on a new line
+
+- This is a list
+- with items
+"""
+        blocks = markdown_to_blocks(md)
+        self.assertEqual(
+            blocks,
+            [
+                "This is **bolded** paragraph",
+                "This is another paragraph with _italic_ text and `code` here\nThis is the same paragraph on a new line",
+                "- This is a list\n- with items",
+            ],
+        )
+
+    def test_markdown_to_blocks_empty(self):
+        md = """
+This is **bolded** paragraph
+
+
+
+This is another paragraph with _italic_ text and `code` here
+This is the same paragraph on a new line
+
+
+
+
+- This is a list
+- with items
+"""
+        blocks = markdown_to_blocks(md)
+        self.assertEqual(
+            blocks,
+            [
+                "This is **bolded** paragraph",
+                "This is another paragraph with _italic_ text and `code` here\nThis is the same paragraph on a new line",
+                "- This is a list\n- with items",
+            ],
+        )
 
 if __name__ == '__main__':
     unittest.main()
