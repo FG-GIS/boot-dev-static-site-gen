@@ -1,6 +1,8 @@
-import textnode as tn
+from file_handler import update_content,generate_page
 def main():
-    pass
+    update_content()
+    generate_page("./content/index.md","./template.html","./public/index.html")
+    return
 
 
 main()

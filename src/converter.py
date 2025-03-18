@@ -137,11 +137,7 @@ def markdown_to_html_node(md_file: str) -> HTMLNode:
     body = ParentNode("div",[])
     md_blocks = markdown_to_blocks(md_file)
     for tag_l,content in map(block_parser,md_blocks):
-        # print(f"content is: {content} ||||| testt")
-        # print("tag is: ",tag_l)
         if tag_l[0] == "pre":
-            # print(TextNode(content,TextType.CODE))
-            # print(ParentNode(tag_l[0],[text_node_to_html_node(TextNode(content,TextType.CODE))]))
             body.children.append(
                 ParentNode(tag_l[0],[text_node_to_html_node(TextNode(content,TextType.CODE))]))
             continue
@@ -149,3 +145,9 @@ def markdown_to_html_node(md_file: str) -> HTMLNode:
         h_nodes = list(map(text_node_to_html_node,t_nodes))
         body.children.append(ParentNode(tag_l[0],h_nodes))
     return body
+
+def extract_title(md) -> str:
+    title_md = re.findall(r"^# .*",md)
+    if not title_md:
+        raise Exception("no title found")
+    return parse_html_heading(title_md[0])[0]

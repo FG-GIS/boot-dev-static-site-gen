@@ -212,6 +212,13 @@ and a link: [GitHub](https://github.com)
             "<div><blockquote>This is a <b>quote</b> with <i>multiple</i> lines third line</blockquote><ol><li>Ordered <code>list</code> item 1</li><li>Ordered list item 2</li><li>Ordered list item 3</li></ol><p>this is a paragraph with an image: <img src=\"https://example.com/image.png\" alt=\"alt text\" /> and a link: <a href=\"https://github.com\">GitHub</a></p></div>",
         )
 
+    def test_title_extraction(self):
+            md = """# Main Title"""
+            title = extract_title(md)
+            self.assertEqual(title, "Main Title")
+            
+            with self.assertRaises(Exception):
+                extract_title("No title here")
 
 if __name__ == '__main__':
     unittest.main()
