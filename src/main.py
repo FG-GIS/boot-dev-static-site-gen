@@ -1,7 +1,7 @@
-from file_handler import update_content,generate_page
+from file_handler import update_content,generate_page_recursive
 def main():
     update_content()
-    generate_page("./content/index.md","./template.html","./public/index.html")
+    generate_page_recursive("./content","./template.html","./public")
     return
 
 

@@ -1,4 +1,5 @@
 import os,shutil
+from pathlib import Path
 from converter import markdown_to_html_node,extract_title
 
 def update_content(src: str = "static",dest: str = "public"):
@@ -37,3 +38,11 @@ def generate_page(from_path, template_path, dest_path):
     tmplt_fd.close()
     md_fd.close()
     out.close()
+
+def generate_page_recursive(dir_path_content,template_path, dest_dir_path):
+    for p in os.listdir(dir_path_content):
+        if p[-3:] == ".md":
+                generate_page(os.path.join(dir_path_content,p),template_path,os.path.join(dest_dir_path,p[:-3]+".html"))
+                continue
+        if os.path.isdir(os.path.join(dir_path_content,p)):
+            generate_page_recursive(os.path.join(dir_path_content,p),template_path,os.path.join(dest_dir_path,p))
