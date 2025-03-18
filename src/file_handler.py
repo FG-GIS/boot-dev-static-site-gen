@@ -14,7 +14,7 @@ def update_content(src: str = "static",dest: str = "public"):
             continue
         update_content(p_src,target)
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, b_path):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
 
     md_fd = open(from_path,"r")
@@ -27,7 +27,7 @@ def generate_page(from_path, template_path, dest_path):
     title = extract_title(md)
 
     template = template.replace("{{ Content }}",html.to_html())
-    template = template.replace("{{ Title }}",title)
+    template = template.replace("{{ Title }}",title).replace("href=\"/",f"href=\"{b_path}").replace("src=\"/",f"src=\"{b_path}")
 
     target_path = os.path.dirname(dest_path)    
     if not os.path.exists(target_path):
@@ -39,10 +39,10 @@ def generate_page(from_path, template_path, dest_path):
     md_fd.close()
     out.close()
 
-def generate_page_recursive(dir_path_content,template_path, dest_dir_path):
+def generate_page_recursive(dir_path_content,template_path, dest_dir_path, b_path):
     for p in os.listdir(dir_path_content):
         if p[-3:] == ".md":
-                generate_page(os.path.join(dir_path_content,p),template_path,os.path.join(dest_dir_path,p[:-3]+".html"))
+                generate_page(os.path.join(dir_path_content,p),template_path,os.path.join(dest_dir_path,p[:-3]+".html"),b_path)
                 continue
         if os.path.isdir(os.path.join(dir_path_content,p)):
-            generate_page_recursive(os.path.join(dir_path_content,p),template_path,os.path.join(dest_dir_path,p))
+            generate_page_recursive(os.path.join(dir_path_content,p),template_path,os.path.join(dest_dir_path,p),b_path)
