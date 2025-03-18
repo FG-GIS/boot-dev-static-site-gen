@@ -2,7 +2,7 @@ import os,shutil
 from pathlib import Path
 from converter import markdown_to_html_node,extract_title
 
-def update_content(src: str = "static",dest: str = "public"):
+def update_content(src: str = "static",dest: str = "docs"):
     if os.path.exists(dest):
         shutil.rmtree(dest)
     os.mkdir(dest)
